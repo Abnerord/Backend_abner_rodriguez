@@ -1,5 +1,7 @@
 
 $(document).ready(function () {
+
+  $('select').material_select();
 /*
   Creación de una función personalizada para jQuery que detecta cuando se detiene el scroll en la página
 */
@@ -96,9 +98,45 @@ $('#mostrarTodos').click(function(){
         console.log("no se ha podido");
         
       }
+
+      
     });
 
 });
 
+function rellenar(){
+  var tipos = [];
+    var ciudades = [];
+    var indicet,indicec;
+    $.ajax({
+      type: "GET",
+      url: "data-1.json",
+      data: "data",
+      dataType: "JSON",
+      success: function (data) {
+        $.each(data, function (indice) { 
+            if(tipos.indexOf(data[indice].Tipo)===-1){tipos.push(data[indice].Tipo)}
+            if(ciudades.indexOf(data[indice].Ciudad)===-1){ciudades.push(data[indice].Ciudad)}
+        });
+
+        indicet = tipos.length;
+        indicec = ciudades.length;
+
+        $.each(ciudades, function (indicec) { 
+          $('#selectCiudad').append('<option value="'+ciudades[indicec]+'">'+ciudades[indicec]+'</option>');
+        });
+
+        $.each(tipos, function (indicet) { 
+          $('#selectTipo').append('<option value="'+ciudades[indicet]+'">'+ciudades[indicet]+'</option>');
+        });
+
+        $('select').material_select();
+      }
+    });
+    
+
+}
+
+rellenar();
 });
    
