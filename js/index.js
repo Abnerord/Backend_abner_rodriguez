@@ -53,7 +53,7 @@ function playVideoOnScroll(){
 }
 
 inicializarSlider();
-playVideoOnScroll();
+
 
 
 $('#mostrarTodos').click(function(){
@@ -127,7 +127,7 @@ function rellenar(){
         });
 
         $.each(tipos, function (indicet) { 
-          $('#selectTipo').append('<option value="'+ciudades[indicet]+'">'+ciudades[indicet]+'</option>');
+          $('#selectTipo').append('<option value="'+tipos[indicet]+'">'+tipos[indicet]+'</option>');
         });
 
         $('select').material_select();
@@ -138,5 +138,56 @@ function rellenar(){
 }
 
 rellenar();
+
+$("#submitButton").click(function () { 
+  var precio = $("#rangoPrecio").val();
+  var ciudad = $("#selectCiudad").val();
+  var tipo = $("#selectTipo").val();
+  var respuesta;
+  var impresion;
+  console.log(precio + ciudad + tipo);
+  
+  $.ajax({
+    type: "POST",
+    url: "buscador.php",
+    data: {ciudad:ciudad, precio:precio, tipo:tipo},
+    success: function (response) {
+    
+      var dat = JSON.parse(response);
+      var tamaño = dat.length;
+      var contenedordos = $(".resultado");
+      contenedordos.empty();
+      $.each(dat, function (tamaño) { 
+       
+        contenedordos.append('<div>'
+        +'<div class="card horizontal valign-wrapper">'
+        + '<div class="card-image">'
+        + '<img src="img/home.jpg" class="responsive-img">'   
+        + '</div>'
+        + '<div class="card-stacked">'
+        +   '<div class="card-content">'
+        +     '<p>'
+        +       '<b>Dirección: </b>' + dat[tamaño].Direccion +'<br>'
+        +       '<b>Ciudad: </b>' + dat[tamaño].Ciudad +'<br>'
+        +       '<b>Teléfono: </b>' + dat[tamaño].Telefono +'<br>'
+        +       '<b>Código Postal: </b>' + dat[tamaño].Codigo_Postal +'<br>'
+        +       '<b>Tipo: </b>' + dat[tamaño].Tipo +'<br>'
+        +       '<b>precio: </b>' + dat[tamaño].Precio +'<br>'
+        +     '</p>'
+        +    '</div>'
+        +   '<div class="card-action">'
+        +      '<a>ver mas</a>'
+        +    '</div>'
+        +  '</div>'
+        +'</div>');        
+      });
+      
+       
+
+    }
+  });
+  
+});
+
 });
    

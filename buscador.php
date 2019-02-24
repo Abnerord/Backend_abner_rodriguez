@@ -10,6 +10,7 @@
     $data = file_get_contents("data-1.json");
     $dataprocess = json_decode($data,true);
     
+
     $buscados = array();
 
     foreach($dataprocess as $valor){
@@ -34,6 +35,7 @@ if ($ciudad!="" && $tipo!=""){
             array_push($armado,$dato);
         }
     }
+ 
     unset($dato);
 }else if ($ciudad!=""){
     foreach($buscados as $dato){
@@ -41,6 +43,7 @@ if ($ciudad!="" && $tipo!=""){
             array_push($armado,$dato);
         }
     }
+   
     unset($dato);
 }else if ($tipo!=""){
     foreach($buscados as $dato){
@@ -48,15 +51,13 @@ if ($ciudad!="" && $tipo!=""){
             array_push($armado,$dato);
         }
     }
+    
     unset($dato);
 }else{
     $armado = $buscados;
 }
-    
  
-$archivo = json_encode($armado);
-echo $archivo;
-
-fclose($data);
+ 
+echo json_encode($armado, JSON_FORCE_OBJECT);
 
 ?>
