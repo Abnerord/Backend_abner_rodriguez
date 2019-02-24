@@ -54,7 +54,7 @@ function playVideoOnScroll(){
 
 inicializarSlider();
 
-
+//Funcion para el boton de mostrar todo
 
 $('#mostrarTodos').click(function(){
     $.ajax({
@@ -63,8 +63,7 @@ $('#mostrarTodos').click(function(){
       data: "data",
       dataType: "json",
       success: function (data) {
-        var contenedor = $(".resultado");
-        var indice = data.length;
+        var contenedor = $(".resultado"); //toma el selector donde se concatenara las card
         contenedor.empty();
       $.each(data, function (indice) { 
        
@@ -104,6 +103,7 @@ $('#mostrarTodos').click(function(){
 
 });
 
+//Funcion para rellenar las opciones del select
 function rellenar(){
   var tipos = [];
     var ciudades = [];
@@ -116,7 +116,7 @@ function rellenar(){
       success: function (data) {
         $.each(data, function (indice) { 
             if(tipos.indexOf(data[indice].Tipo)===-1){tipos.push(data[indice].Tipo)}
-            if(ciudades.indexOf(data[indice].Ciudad)===-1){ciudades.push(data[indice].Ciudad)}
+            if(ciudades.indexOf(data[indice].Ciudad)===-1){ciudades.push(data[indice].Ciudad)} //con each se recorren los arrays
         });
 
         indicet = tipos.length;
@@ -139,6 +139,8 @@ function rellenar(){
 
 rellenar();
 
+
+//Funcion para llamar el archivo php y crear el json de la busqueda
 $("#submitButton").click(function () { 
   var precio = $("#rangoPrecio").val();
   var ciudad = $("#selectCiudad").val();

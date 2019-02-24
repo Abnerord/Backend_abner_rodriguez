@@ -1,18 +1,22 @@
 <?php
+//recibe los parametros del AJAX
     $precio = $_POST['precio'];
     $ciudad = $_POST['ciudad'];
     $tipo= $_POST['tipo'];
 
+    //CREA LAS SUBCADESDAS PARA EL MINIMO Y MAXIMO PRECIO
     $punto = strpos($precio,';');
     $min = substr($precio,0,$punto);
     $max = substr($precio,$punto + 1);
 
+    //ABRE EL ARCHIVO JSON PARA LEERLO Y ALMACENARLO
     $data = file_get_contents("data-1.json");
     $dataprocess = json_decode($data,true);
     
 
     $buscados = array();
 
+    //RECORRE EL ARRAY CREADO
     foreach($dataprocess as $valor){
        $x = $valor['Precio'];
        $dolar = strpos($x,"$");
@@ -28,7 +32,7 @@
     unset($valor);
 
     $armado = array();
-
+//VERIFICA LAS OPCIONES DEL SELECT
 if ($ciudad!="" && $tipo!=""){
     foreach($buscados as $dato){
         if ($dato['Ciudad']== $ciudad && $dato['Tipo']==$tipo){
@@ -57,7 +61,7 @@ if ($ciudad!="" && $tipo!=""){
     $armado = $buscados;
 }
  
- 
+ //CREA EL ARCHIVO JSON
 echo json_encode($armado, JSON_FORCE_OBJECT);
 
 ?>
