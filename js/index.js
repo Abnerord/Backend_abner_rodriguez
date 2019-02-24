@@ -1,3 +1,5 @@
+
+$(document).ready(function () {
 /*
   Creación de una función personalizada para jQuery que detecta cuando se detiene el scroll en la página
 */
@@ -50,3 +52,53 @@ function playVideoOnScroll(){
 
 inicializarSlider();
 playVideoOnScroll();
+
+
+$('#mostrarTodos').click(function(){
+    $.ajax({
+      type: "GET",
+      url: "data-1.json",
+      data: "data",
+      dataType: "json",
+      success: function (data) {
+        var contenedor = $(".resultado");
+        var indice = data.length;
+        contenedor.empty();
+      $.each(data, function (indice) { 
+       
+        contenedor.append('<div>'
+        +'<div class="card horizontal valign-wrapper">'
+        + '<div class="card-image">'
+        + '<img src="img/home.jpg" class="responsive-img">'   
+        + '</div>'
+        + '<div class="card-stacked">'
+        +   '<div class="card-content">'
+        +     '<p>'
+        +       '<b>Dirección: </b>' + data[indice].Direccion +'<br>'
+        +       '<b>Ciudad: </b>' + data[indice].Ciudad +'<br>'
+        +       '<b>Teléfono: </b>' + data[indice].Telefono +'<br>'
+        +       '<b>Código Postal: </b>' + data[indice].Codigo_Postal +'<br>'
+        +       '<b>Tipo: </b>' + data[indice].Tipo +'<br>'
+        +       '<b>precio: </b>' + data[indice].Precio +'<br>'
+        +     '</p>'
+        +    '</div>'
+        +   '<div class="card-action">'
+        +      '<a>ver mas</a>'
+        +    '</div>'
+        +  '</div>'
+        +'</div>');        
+      });
+    
+   
+
+      },
+      error: function(){
+        console.log("no se ha podido");
+        
+      }
+    });
+
+});
+
+});
+   
